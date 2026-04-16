@@ -261,3 +261,28 @@ fun `validateEmail returns false for invalid email`() {
 - [ ] Adicionar `google-services.json` se usar Firebase
 - [ ] Atualizar ícones do launcher
 - [ ] Remover / adaptar exemplos genéricos que não se aplicam ao projeto
+
+---
+
+## CI/CD (GitHub Actions)
+
+This project uses GitHub Actions for continuous integration and deployment:
+
+- **Build & Test:** On every push and pull request, the workflow will:
+  - Checkout code
+  - Set up JDK 17
+  - Cache Gradle dependencies
+  - Build the app (assembleDebug)
+  - Run unit tests
+  - Run lint
+- **Deploy:** On push to `main`, the workflow is pre-configured to deploy to the Google Play Store using the `r0adkll/upload-google-play` action.
+
+### Required Secrets for Deploy
+To enable deploy to the Play Store, add these secrets in your repository settings:
+- `PLAY_STORE_JSON`: Service account JSON for Play Store API access
+- `KEYSTORE_BASE64`: Base64-encoded release keystore
+- (Other signing configs as needed)
+
+> The deploy step is pre-configured but will only work when the required secrets are set.
+
+See `.github/workflows/android.yml` for details.
